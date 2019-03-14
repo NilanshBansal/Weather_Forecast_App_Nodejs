@@ -8,9 +8,16 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 </head>
-
+<style>
+canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 600px;
+}
+</style>
 <body>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <canvas id="myChart" width="500" height="500" ></canvas>
         <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var temp = "<%= temp %>";
@@ -24,7 +31,7 @@
                 labels: date.split(","),
                 datasets: [
                     {
-                    label: 'Temperature °C',
+                    label: 'Temperature (°C)',
                     data: temp.split(","),
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
@@ -42,7 +49,7 @@
                     ],
                     borderWidth: 1
                 },
-                {label: 'Pressure hpa',
+                {label: 'Pressure (hpa)',
                     data: pressure.split(","),
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
@@ -61,7 +68,7 @@
                     borderWidth: 1
 
                 },
-                {label: 'Humidity %',
+                {label: 'Humidity (%)',
                     data: humidity.split(","),
                     backgroundColor: [
                         'rgba(255, 206, 86, 0.2)',
@@ -110,7 +117,8 @@
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+                responsive: false
             }
         });
         </script>
