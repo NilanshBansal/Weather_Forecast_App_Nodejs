@@ -11,10 +11,44 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/graph', function (req, res, next) {
-  res.render('graph');
+  if(!req.query.hasOwnProperty('place')){
+    res.status(400);
+    return res.send("Please specify query parameter place");
+  }
+  axios.get(forecast_url+ req.query.place + app_id)
+    .then(function (response) {
+      items = []
+      temp = []
+      pressure = []
+      humidity = []
+      date = []
+      if (response.hasOwnProperty('data') && response.data.hasOwnProperty('list')){
+        items = response.data.list;
+      }
+      for(var i=0;i< items.length;i++){
+        time = items[i].dt_txt.substring(10);
+        if(time.indexOf("12:00:00") > -1){
+          temp.push(items[i].main.temp);
+          pressure.push(items[i].main.pressure);
+          humidity.push(items[i].main.humidity);
+          date.push(items[i].dt_txt.split(" ")[0]);
+        }
+      }
+      return res.render('graph',{labels: date,temp,pressure,humidity});
+
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.status(400);
+      return res.send(error);
+    });
 });
 
 router.get('/weather', function (req, res, next) {
+  if(!req.query.hasOwnProperty('place')){
+    res.status(400);
+    return res.send("Please specify query parameter place");
+  }
   axios.get(url+ req.query.place + app_id)
     .then(function (response) {
       temp = null
@@ -36,6 +70,10 @@ router.get('/weather', function (req, res, next) {
 
 
 router.get('/weather_forecast', function (req, res, next) {
+  if(!req.query.hasOwnProperty('place')){
+    res.status(400);
+    return res.send("Please specify query parameter place");
+  }
   axios.get(forecast_url+ req.query.place + app_id)
     .then(function (response) {
       items = []

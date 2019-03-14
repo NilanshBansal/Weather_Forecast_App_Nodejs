@@ -13,14 +13,19 @@
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
         var ctx = document.getElementById('myChart').getContext('2d');
+        var temp = "<%= temp %>";
+        var pressure = "<%= pressure %>";
+        var humidity = "<%= humidity %>";
+        var date = "<%= date %>";
+
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['15/03/19', '16/03/19', '17/03/19', '18/03/19', '19/03/19'],
+                labels: date.split(","),
                 datasets: [
                     {
                     label: 'Temperature °C',
-                    data: [23.34, 23.85, 25.18, 25.87, 26.25],
+                    data: temp.split(","),
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
@@ -38,7 +43,7 @@
                     borderWidth: 1
                 },
                 {label: 'Pressure hpa',
-                    data: [1017.17, 1014.97, 1012.86, 1011.7, 1008.37],
+                    data: pressure.split(","),
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -57,7 +62,7 @@
 
                 },
                 {label: 'Humidity %',
-                    data: [52, 44, 42, 41, 38],
+                    data: humidity.split(","),
                     backgroundColor: [
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
