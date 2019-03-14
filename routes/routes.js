@@ -10,6 +10,10 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Weather Forecast Application' });
 });
 
+router.get('/graph', function (req, res, next) {
+  res.render('graph');
+});
+
 router.get('/weather', function (req, res, next) {
   axios.get(url+ req.query.place + app_id)
     .then(function (response) {

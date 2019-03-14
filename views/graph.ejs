@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+</head>
+
+<body>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['15/03/19', '16/03/19', '17/03/19', '18/03/19', '19/03/19'],
+                datasets: [
+                    {
+                    label: 'Temperature °C',
+                    data: [23.34, 23.85, 25.18, 25.87, 26.25],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                },
+                {label: 'Pressure hpa',
+                    data: [1017.17, 1014.97, 1012.86, 1011.7, 1008.37],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+
+                },
+                {label: 'Humidity %',
+                    data: [52, 44, 42, 41, 38],
+                    backgroundColor: [
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+
+                }
+                // ,{label: 'Humidity %',
+                //     data: [15, 19, 3, 5, 2, 3],
+                //     backgroundColor: [
+                //         'rgba(255, 99, 132, 0.2)',
+                //         'rgba(54, 162, 235, 0.2)',
+                //         'rgba(255, 206, 86, 0.2)',
+                //         'rgba(75, 192, 192, 0.2)',
+                //         'rgba(153, 102, 255, 0.2)',
+                //         'rgba(255, 159, 64, 0.2)'
+                //     ],
+                //     borderColor: [
+                //         'rgba(255, 99, 132, 1)',
+                //         'rgba(54, 162, 235, 1)',
+                //         'rgba(255, 206, 86, 1)',
+                //         'rgba(75, 192, 192, 1)',
+                //         'rgba(153, 102, 255, 1)',
+                //         'rgba(255, 159, 64, 1)'
+                //     ],
+                //     borderWidth: 1
+
+                // }
+            ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        </script>
+           
+</body>
+
+</html>
