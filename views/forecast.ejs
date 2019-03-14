@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Next 5 days Forecast for <%= place %></h1>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Pressure</th>
+            <th>Humidity</th>
+        </tr>
+        <% for(var i=0; i < forecast.length; i++) { %>
+           <tr>
+             <td><%= forecast[i].date %></td>
+             <td><%= forecast[i].temp %> °C</td>
+             <td><%= forecast[i].pressure %> hpa</td>
+             <td><%= forecast[i].humidity %>%</td>
+            </tr>
+        <% } %>
+        </table>
+  </body>
+</html>
