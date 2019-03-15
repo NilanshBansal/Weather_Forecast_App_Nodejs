@@ -21,10 +21,15 @@
     <form action="" method="get" class="ui form">
         <div class="eight wide field">
             <input type="text" name="place" placeholder="Enter place name" id="placename"/>
+            <div class="ui pointing label">
+                Please enter a Place name
+            </div>
         </div>
         <input type="submit" value="submit" class="ui button"/>
+        <a class="ui green basic button active" href="/graph" onclick="location.href=this.href+'?place=' + $('#placename').val() ;return false;">Show Graph</a>
     </form>
-    
+
+    <h2 id="weather_today" style="display: none;"></h2>
     <table class='ui selectable celled table unstackable' id="output_forecast" style="display: none;"></table>
     
 </body>
@@ -36,7 +41,7 @@
                 url: '/ajax_weather_forecast?place=' + $('#placename').val(),
                 success: function (result) {
                     forecast = result['forecast'];
-                    let html_response = "<thead><tr><th>Date</th><th>Temperature</th><th>Pressure</th><th>Humidity</th></tr><thead><tbody>";
+                    let html_response = "<thead><tr><th>Date</th><th>Temperature (°C)</th><th>Pressure (hpa)</th><th>Humidity (%)</th></tr><thead><tbody>";
             
                     for (var i = 0; i < forecast.length; i++) {
                         html_response += "<tr><td>" + forecast[i].date + "</td><td>" + forecast[i].temp + "</td><td>" + forecast[i].pressure + "</td><td>" + forecast[i].humidity + "</td></tr></tbody>"
@@ -44,6 +49,19 @@
 
                     $('#output_forecast').html(html_response);
                     $('#output_forecast').css("display","");
+
+                },
+                error: function (err) {
+                    console.log(err.statusText);
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/ajax_weather?place=' + $('#placename').val(),
+                success: function (result) {
+                    let output_response = "<b>Temperature: </b>" + result.temp + "°C, <b>Pressure: </b>" + result.pressure + "hpa, <b>Humidity: </b>" + result.humidity + "%";
+                    $('#weather_today').html(output_response);
+                    $('#weather_today').css("display","");
 
                 },
                 error: function (err) {

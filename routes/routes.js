@@ -135,5 +135,29 @@ router.get('/ajax_weather_forecast', function (req, res, next) {
     });
 });
 
+router.get('/ajax_weather', function (req, res, next) {
+  if(!req.query.hasOwnProperty('place')){
+    res.status(400);
+    return res.send("Please specify query parameter place");
+  }
+  axios.get(url+ req.query.place + app_id)
+    .then(function (response) {
+      temp = null
+      pressure = null
+      humidity = null
+      if (response.hasOwnProperty('data') && response.data.hasOwnProperty('main')){
+        temp = response.data.main.temp;
+        pressure = response.data.main.pressure;
+        humidity = response.data.main.humidity;
+      }
+      return res.json({ temp,pressure,humidity});
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.status(400);
+      return res.send(error);
+    });
+});
+
 module.exports = router;
 
