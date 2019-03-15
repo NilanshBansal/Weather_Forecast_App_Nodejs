@@ -14,18 +14,19 @@
 
 <body class="ui container">
     <br/>
-    <h1>
+    <h1 class="ui header">
         <%= title %>
     </h1>
     
     <form action="" method="get" class="ui form">
         <div class="eight wide field">
-            <input type="text" name="place" placeholder="Enter place name" id="placename"/>
-            <div class="ui pointing label">
+            <div class="ui pointing below label">
                 Please enter a Place name
             </div>
+            <input type="text" name="place" placeholder="Enter place name" id="placename"/>
         </div>
-        <input type="submit" value="submit" class="ui button"/>
+         
+        <input type="submit" value="Show Report" class="ui red basic button"/>
         <a class="ui green basic button active" href="/graph" onclick="location.href=this.href+'?place=' + $('#placename').val() ;return false;">Show Graph</a>
     </form>
 
