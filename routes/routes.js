@@ -38,16 +38,15 @@ router.get('/graph', function (req, res, next) {
 
     })
     .catch(function (error) {
-      console.log(error);
       res.status(400);
-      return res.send(error);
+      return res.send(error.data);
     });
 });
 
 router.get('/ajax_weather_forecast', function (req, res, next) {
   if(!req.query.hasOwnProperty('place')){
     res.status(400);
-    return res.send("Please specify query parameter place");
+    return res.json({"message":"Please specify query parameter place"});
   }
   axios.get(forecast_url+ req.query.place + app_id)
     .then(function (response) {
@@ -69,16 +68,15 @@ router.get('/ajax_weather_forecast', function (req, res, next) {
       return res.json({'forecast':output,'place':req.query.place})
     })
     .catch(function (error) {
-      console.log(error);
       res.status(400);
-      return res.send(error);
+      return res.send(error.data);
     });
 });
 
 router.get('/ajax_weather_today', function (req, res, next) {
   if(!req.query.hasOwnProperty('place')){
     res.status(400);
-    return res.send("Please specify query parameter place");
+    return res.json({"message":"Please specify query parameter place"});
   }
   axios.get(url+ req.query.place + app_id)
     .then(function (response) {
@@ -93,9 +91,8 @@ router.get('/ajax_weather_today', function (req, res, next) {
       return res.json({ temp,pressure,humidity});
     })
     .catch(function (error) {
-      console.log(error);
       res.status(400);
-      return res.send(error);
+      return res.send(error.data);
     });
 });
 
