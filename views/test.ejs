@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+    
+    <br/>
+    <br/>
+    <form action="" method="get">
+        <input type="text" name="place" placeholder="Enter place name" id="placename"/>
+        <input type="submit" value="submit" />
+    </form>
+    <div id="output_forecast"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        $('form').on('submit', function (event) {
+            $.ajax({
+                type: 'GET',
+                url: '/ajax_weather_forecast?place=' + $('#placename').val(),
+                success: function (result) {
+                    console.log(result);
+                    console.log("Temp",result['forecast'][0]['temp']);
+                    console.log("pressure",result['forecast'][0]['pressure']);
+                    console.log("humidity",result['forecast'][0]['humidity']);
+                    console.log("date",result['forecast'][0]['date']);
+                    forecast = result['forecast'];
+                    let variable = forecast[0].date;
+                    console.log("variable", variable);
+                    let html_response = "<table><tr><th>Date</th></tr><%for(var i=0;i<5;i++){%><tr><td>" + variable + "</td></tr><%}%></table>"
+                    $('#output_forecast').html(html_response);
+                    $('#output_forecast').css("display","block");
+                },
+                error: function (err) {
+                    console.log(err.statusText);
+                }
+            });
+            event.preventDefault();
+        });
+    });
+</script>
+</html>
