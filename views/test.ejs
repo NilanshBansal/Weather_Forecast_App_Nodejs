@@ -5,24 +5,28 @@
     <title>
         <%= title %>
     </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 </head>
 
-<body>
+<body class="ui container">
+    <br/>
     <h1>
         <%= title %>
     </h1>
     
-    <br/>
-    <br/>
-    <form action="" method="get">
-        <input type="text" name="place" placeholder="Enter place name" id="placename"/>
-        <input type="submit" value="submit" />
+    <form action="" method="get" class="ui form">
+        <div class="eight wide field">
+            <input type="text" name="place" placeholder="Enter place name" id="placename"/>
+        </div>
+        <input type="submit" value="submit" class="ui button"/>
     </form>
-    <div id="output_forecast"></div>
+    
+    <table class='ui selectable celled table unstackable' id="output_forecast" style="display: none;"></table>
+    
 </body>
 <script>
     $(document).ready(function () {
@@ -31,17 +35,16 @@
                 type: 'GET',
                 url: '/ajax_weather_forecast?place=' + $('#placename').val(),
                 success: function (result) {
-                    console.log(result);
-                    console.log("Temp",result['forecast'][0]['temp']);
-                    console.log("pressure",result['forecast'][0]['pressure']);
-                    console.log("humidity",result['forecast'][0]['humidity']);
-                    console.log("date",result['forecast'][0]['date']);
                     forecast = result['forecast'];
-                    let variable = forecast[0].date;
-                    console.log("variable", variable);
-                    let html_response = "<table><tr><th>Date</th></tr><%for(var i=0;i<5;i++){%><tr><td>" + variable + "</td></tr><%}%></table>"
+                    let html_response = "<thead><tr><th>Date</th><th>Temperature</th><th>Pressure</th><th>Humidity</th></tr><thead><tbody>";
+            
+                    for (var i = 0; i < forecast.length; i++) {
+                        html_response += "<tr><td>" + forecast[i].date + "</td><td>" + forecast[i].temp + "</td><td>" + forecast[i].pressure + "</td><td>" + forecast[i].humidity + "</td></tr></tbody>"
+                    }
+
                     $('#output_forecast').html(html_response);
-                    $('#output_forecast').css("display","block");
+                    $('#output_forecast').css("display","");
+
                 },
                 error: function (err) {
                     console.log(err.statusText);
