@@ -10,10 +10,11 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Weather Forecast Application' });
 });
 
+/* GET GRAPH - PLOTS GRAPH FOR THE NEXT 5 DAYS CHANGE IN TEMP, PRESSURE, HUMIDITY */
 router.get('/graph', function (req, res, next) {
-  if(!req.query.hasOwnProperty('place')){
+  if((!req.query.hasOwnProperty('place')) || req.query.place == ''){
     res.status(400);
-    return res.json("Please specify query parameter place");
+    return res.json({"message":"Please specify query parameter place"});
   }
   axios.get(forecast_url+ req.query.place + app_id)
     .then(function (response) {
@@ -25,6 +26,7 @@ router.get('/graph', function (req, res, next) {
       if (response.hasOwnProperty('data') && response.data.hasOwnProperty('list')){
         items = response.data.list;
       }
+      // Extracting only one weather report for each day i.e at 12:00:00   
       for(var i=0;i< items.length;i++){
         time = items[i].dt_txt.substring(10);
         if(time.indexOf("12:00:00") > -1){
@@ -35,16 +37,16 @@ router.get('/graph', function (req, res, next) {
         }
       }
       return res.render('graph',{labels: date,temp,pressure,humidity});
-
     })
     .catch(function (error) {
       res.status(400);
-      return res.json({"message":"Please specify query parameter place"});
+      return res.send(error.data);
     });
 });
 
+/* GET WEATHER FORECAST FOR THE NEXT 5 DAYS */
 router.get('/ajax_weather_forecast', function (req, res, next) {
-  if(!req.query.hasOwnProperty('place')){
+  if((!req.query.hasOwnProperty('place')) || req.query.place == ''){
     res.status(400);
     return res.json({"message":"Please specify query parameter place"});
   }
@@ -73,8 +75,9 @@ router.get('/ajax_weather_forecast', function (req, res, next) {
     });
 });
 
+/* GET WEATHER FORECAST FOR TODAY */
 router.get('/ajax_weather_today', function (req, res, next) {
-  if(!req.query.hasOwnProperty('place')){
+  if((!req.query.hasOwnProperty('place')) || req.query.place == ''){
     res.status(400);
     return res.json({"message":"Please specify query parameter place"});
   }
